@@ -8,10 +8,11 @@
 #ifndef NNSTRUCT_H_
 #define NNSTRUCT_H_
 
+#define NO_OF_PARAMETER 3
 typedef struct x1_x2
 {
-	int x1;
-	int x2;
+	int x[NO_OF_PARAMETER];
+	int ylabel;
 } twoDem;
 
 #endif /* NNSTRUCT_H_ */
