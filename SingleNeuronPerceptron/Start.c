@@ -4,47 +4,55 @@
  *  Created on: 12 আগস্ট, 2016
  *      Author: sankarsan
  */
-#include <mgl2/mgl_cf.h>
+#include<graphics.h>
+#include "nnstruct.h"
+#include <stdio.h>
+#include<errno.h>
+#include<string.h>
 
-
-
-int sample(HMGL * gr)
+twoDem * readData()
 {
-  //HMDT y;  mgls_prepare1d(&y);
-  //gr->SetOrigin(0,0,0);
-  //gr->SubPlot(2,2,0,"");  gr->Title("Plot plot (default)");
-  //gr->Box();  gr->Plot(y);
+	int n;
+	int i;
+	twoDem * temp=NULL;
+	printf("Enter the number of training samples:");
+	scanf("%d",&n);
+	temp=(twoDem *)malloc(sizeof(twoDem)*n);
+	if(temp)
+	{
+		for(i=0;i<n;i++)
+		{
 
-
- /* mgl_set_origin(*gr,0,0,0);
-  mgl_subplot(*gr,2,2,0,"");
-  mgl_title(*gr,"Plot plot (default)");
-  mgl_box(*gr);
-  mgl_plot(gr,&y,NULL);
-  return 0;*/
-
-  HMDT y = mgl_create_data_size(50,3,1);
-  char pen='x',opt='o';
-  mgl_data_modify(y,"0.7*sin(2*pi*x) + 0.5*cos(3*pi*x) + 0.2*sin(pi*x)",0);
-  mgl_data_modify(y,"sin(2*pi*x)",1);
-  mgl_data_modify(y,"cos(2*pi*x)",2);
-  mgl_box(*gr);
-  mgl_plot(*gr,y,&pen,&opt);
-  mgl_delete_data(y);
-  return 0;
+		}
+	}
+	else
+	{
+		printf("Problem with memory allocation problem.: %s",strerror(errno));
+	}
+return temp;
 }
-
-
 
 int main()
 {
-  HMGL gr;
-  gr=mgl_create_graph(640, 480);
-  sample (&gr);
+
+	twoDem * dataset=NULL;
+	dataset=readData();
+	int gd=DETECT, gm;
+	initgraph(&gd, &gm,"");
+
+	setcolor(WHITE);
+	line(getmaxx()/10,0,getmaxx()/10,getmaxy());
+
+	line(0,getmaxy()-getmaxy()/10,getmaxx(),getmaxy()-getmaxy()/10);
 
 
+	outtextxy(400,400,"+");
+	setcolor(RED);
 
-  // mgl_write_frame(gr,"test.png","");
- // mgl_delete_graph(gr);
+	outtextxy(300,150,"-");
+
+	getch();
+	closegraph();
+
+	return 0;
 }
-
