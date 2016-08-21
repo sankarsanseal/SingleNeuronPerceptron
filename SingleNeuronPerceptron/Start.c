@@ -10,6 +10,7 @@
 #include<errno.h>
 #include<string.h>
 #include<stdlib.h>
+#include <math.h>
 #define CIRRAD 4
 
 
@@ -40,6 +41,11 @@ twoDem * readData()
 return temp;
 }
 
+float sigmoid(float input)
+{
+	return 1/(1+exp(-input));
+}
+
 int main()
 {
 
@@ -47,11 +53,11 @@ int main()
 	twoDem * dataset=NULL;
 	dataset=readData();
 	int originx, originy;
-	int w[NO_OF_PARAMETER];
+	float w[NO_OF_PARAMETER];
 	int temp_w[NO_OF_PARAMETER];
 	int x_inter,y_inter;
 	const int learning_rate=0.3;
-	int observed_value;
+	float observed_value;
 	float slope;
 	int gd=DETECT, gm;
 	initgraph(&gd, &gm,"");
@@ -60,7 +66,9 @@ int main()
 	originy=getmaxy()-getmaxy()/10;
 
 	outtextxy(originx-15,originy+2,"O");
-	setcolor(WHITE);
+	//outtextxy(getmaxx()-20,originy+20,"X");
+	//outtextxy(originx,getmaxy(),"Y");
+	setcolor(GREEN);
 	line(originx,0,originx,getmaxy());
 
 	line(0,originy,getmaxx(),originy);
@@ -80,8 +88,9 @@ int main()
 	}
 
 	srand(time(NULL));
-	w[0]=rand()%(getmaxx()> getmaxy()?getmaxy():getmaxx());
+	w[0]=-rand()%(getmaxx()> getmaxy()?getmaxy():getmaxx());
 	w[1]=rand()%getmaxx();
+	w[2]=rand()%getmaxy();
 
 	fprintf(stdout,"w0:%d w1:%d \n",w[0],w[1]);
 
@@ -89,25 +98,27 @@ int main()
 	for(i=0;i<n;i++)
 	{
 		observed_value=0;
-		for(j=0;j<NO_OF_PARAMETER-1;j++)
+		for(j=0;j<NO_OF_PARAMETER;j++)
 		{
 			observed_value+=w[j]*dataset[i].x[j];
 		}
 
-		for(j=0;j<NO_OF_PARAMETER-1;j++)
+		fprintf(stdout,"Sigmoid value %f\n", sigmoid(observed_value));
+
+/*		for(j=0;j<NO_OF_PARAMETER;j++)
 		temp_w[i]=w[i];
 
-		for(j=0;j<NO_OF_PARAMETER-1;j++)
+		for(j=0;j<NO_OF_PARAMETER;j++)
 		{
 				w[j]=temp_w[j] + learning_rate*(observed_value - dataset->x[NO_OF_PARAMETER-1])*dataset->x[j];
 		}
 
-
+*/
 	}
 
-	for(j=0;j<NO_OF_PARAMETER-1;j++)
+	/*for(j=0;j<NO_OF_PARAMETER-1;j++)
 		fprintf(stdout,"w[%d]:%d\n",j,w[j]);
-
+*/
 
 	getch();
 	closegraph();
