@@ -11,7 +11,7 @@
 #define NO_OF_PARAMETER 3
 typedef struct x1_x2
 {
-	int x[NO_OF_PARAMETER];
+	float x[NO_OF_PARAMETER];
 	int ylabel;
 } twoDem;
 
