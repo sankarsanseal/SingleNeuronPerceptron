@@ -11,6 +11,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include <math.h>
+#include<time.h>
 #define CIRRAD 4
 
 
@@ -55,7 +56,7 @@ int main()
 	float w[NO_OF_PARAMETER];
 	float hx=0.0F;
 	int actual;
-	float eta=0.3; //learning rate
+	float eta=0.3F; //learning rate
 	if(dataset!=NULL)
 	{
 		srand(time(NULL));
